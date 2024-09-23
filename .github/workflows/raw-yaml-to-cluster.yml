@@ -1,0 +1,37 @@
+name: Apply Kubernetes YAML
+
+on:
+  workflow_dispatch:
+    inputs:
+      rawYaml:
+        description: 'Kubernetes YAML content to apply'
+        required: true
+        type: string
+
+jobs:
+  apply-kubernetes:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up kubectl using the kubeconfig provided as a secret
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.24.0' # You can specify the version of kubectl here
+
+      # Step 3: Create kubeconfig file from secret
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+
+      # Step 4: Write the raw YAML input to a file
+      - name: Write input YAML to file
+        run: echo "${{ github.event.inputs.rawYaml }}" > ./manifest.yaml
+
+      # Step 5: Apply the YAML to the Kubernetes cluster
+      - name: Apply the YAML to Kubernetes cluster
+        run: kubectl apply -f ./manifest.yaml
