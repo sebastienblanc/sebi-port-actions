@@ -26,7 +26,7 @@ jobs:
       - name: Set up kubeconfig
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
 
       # Step 4: Write the raw YAML input to a file
       - name: Write input YAML to file
