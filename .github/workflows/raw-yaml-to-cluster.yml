@@ -3,10 +3,6 @@ name: Apply Kubernetes YAML
 on:
   workflow_dispatch:
     inputs:
-      operation:
-        required: true
-        description: "Delete, Update or create"
-        type: string
       triggeringUser:
         required: true
         description: "The email of the triggering user"
