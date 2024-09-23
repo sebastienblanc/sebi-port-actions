@@ -3,14 +3,6 @@ name: Apply Kubernetes YAML
 on:
   workflow_dispatch:
     inputs:
-      triggeringUser:
-        required: true
-        description: "The email of the triggering user"
-        type: string
-      runId:
-        required: true
-        description: "Port's Run ID"
-        type: string 
       rawYaml:
         description: 'Kubernetes YAML content to apply'
         required: true
